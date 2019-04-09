@@ -13,7 +13,7 @@ let iosProjFolder  = null;
 let iosPbxProjPath = null;
 
 const getValue = ( config, name ) => {
-	const value = config.match( new RegExp( `<${name}>(.*?)</${name}>`, "i" ) );
+	const value = config.match( new RegExp( `<${name}.*>(.*?)</${name}>`, "i" ) );
 	if( value && value[ 1 ] ) {
 		return value[ 1 ];
 	} else {
@@ -128,9 +128,9 @@ module.exports = context => {
 					}
 
 					// remove APP_NAME and write to Localizable.strings
-					if( _.has( langJson, "app" ) ) {
+					if( _.has( langJson, "app_ios" ) ) {
 						// do processing for appname into plist
-						const localizableStringsJson = langJson.app;
+						const localizableStringsJson = langJson.app_ios;
 						if( !_.isEmpty( localizableStringsJson ) ) {
 							writeStringFile( localizableStringsJson, localeLang, "Localizable.strings" );
 							localizableStringsPaths.push( `${localeLang}.lproj/Localizable.strings` );
